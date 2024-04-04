@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Start Packet Sniffing</title>
+</head>
+<body>
+    <h1>Start Packet Sniffing</h1>
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <label for="interface">Select Interface:</label>
+        <select name="interface" id="interface">
+            {% for iface in interfaces %}
+            <option value="{{ iface }}">{{ iface }}</option>
+            {% endfor %}
+        </select><br>
+        <label for="save_path">Save Path:</label>
+        <input type="text" name="save_path" id="save_path" value="output.pcap"><br>
+        <button type="submit" name="action" value="start">Start Sniffing</button>
+        <button type="submit" name="action" value="stop">Stop Sniffing</button>
+    </form>
+</body>
+</html>

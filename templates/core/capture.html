@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Capture Traffic</title>
+</head>
+<body>
+    <h1>Capture Network Traffic</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="interface">Select Interface:</label>
+        <select name="interface" id="interface">
+            <option value="enp2s0">enp2s0</option>
+            </select>
+        <br>
+        <label for="save_path">Save Path:</label>
+        <input type="text" name="save_path" id="save_path" value="output1.pcap">
+        <br>
+        <button type="submit">Start Sniffing</button>
+        <button type="button" onclick="window.location.href='{{ stop_capture_url }}'">Stop Sniffing</button>
+    </form>
+    <br>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+</body>
+</html>
