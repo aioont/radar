@@ -24,37 +24,8 @@ def packet_capture(interface, save_path):
     except Exception as e:
         return f"Error capturing packets: {str(e)}"
 
+
 def start_stop_sniffing(request):
-    global capture_thread
-    if request.method == 'POST':
-        interface = request.POST.get('interface', 'wlo1')
-        save_path = os.path.join('pcap_capture', request.POST.get('save_path', 'output.pcap'))
-
-        action = request.POST.get('action')
-        if action == 'start':
-            if capture_thread and capture_thread.is_alive():
-                return HttpResponse("Packet capture already active.")
-            capture_thread = Thread(target=packet_capture, args=(interface, save_path))
-            capture_thread.start()
-            return HttpResponse("Packet capture started.")
-        elif action == 'stop':
-            if capture_thread and capture_thread.is_alive():
-                capture_thread.join(timeout=1)
-                if capture_thread.is_alive():
-                    return HttpResponse("Error stopping packet capture.")
-                else:
-                    return HttpResponse("Packet capture stopped successfully.")
-            else:
-                return HttpResponse("No active packet capture.")
-    else:
-        try:
-            interfaces = [iface for iface in conf.ifaces.keys()]
-        except Exception as e:
-            interfaces = ['enp2s0', 'lo', 'wlo1']  # Default interfaces if scapy fails
-        return render(request, 'core/start_sniffing.html', {'interfaces': interfaces})
-
-
-def stop_sniffing(request):
     global capture_thread
     if capture_thread and capture_thread.is_alive():
         capture_thread.join(timeout=1)

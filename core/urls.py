@@ -1,10 +1,13 @@
-from django.urls import path
-from . import views
+from django.shortcuts import render, redirect
+from .forms import PcapFileForm
 
-urlpatterns = [
-    path('pcap_capture/', views.packet_capture, name='pcap_capture'),
-    path('start_stop_sniffing/', views.start_stop_sniffing, name='start_stop_sniffing'),
-    path('capture/', views.capture_traffic, name='capture_traffic'),
-    path('stop/', views.stop_capture, name='stop_capture'),
-    
-]
+def upload_pcap_file(request):
+    if request.method == 'POST':
+        form = PcapFileForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            # You can perform additional processing here
+            return redirect('success')  # Redirect to success page or any other URL
+    else:
+        form = PcapFileForm()
+    return render(request, 'upload_pcap_file.html', {'form': form})

@@ -1,26 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Capture Traffic</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
-<body>
-    <h1>Capture Network Traffic</h1>
-    <form method="post">
-        {% csrf_token %}
-        <label for="interface">Select Interface:</label>
-        <select name="interface" id="interface">
-            <option value="enp2s0">enp2s0</option>
+<body class="container mt-3">
+    <h1 class="display-4 text-center mb-4">Capture Network Traffic</h1>
+    <form method="post" class="row g-3">
+        {% csrf_token %}  <div class="col-md-6">
+            <label for="interface" class="form-label">Select Interface:</label>
+            <select name="interface" id="interface" class="form-select">
+                <option value="enp2s0">enp2s0</option>
+                <option value="wlo1">wlo1</option>
             </select>
-        <br>
-        <label for="save_path">Save Path:</label>
-        <input type="text" name="save_path" id="save_path" value="output1.pcap">
-        <br>
-        <button type="submit">Start Sniffing</button>
-        <button type="button" onclick="window.location.href='{{ stop_capture_url }}'">Stop Sniffing</button>
+        </div>
+        <div class="col-md-6">
+            <label for="save_path" class="form-label">Save Path:</label>
+            <input type="text" name="save_path" id="save_path" value="output1.pcap" class="form-control" placeholder="Enter save path">
+        </div>
+
+        <div class="col-12 d-flex justify-content-center">
+            <button type="submit" name="start" class="btn btn-primary me-3">Start Sniffing</button>
+            <button type="submit" name="stop" class="btn btn-secondary me-3">Stop Sniffing</button>
+        </div>
     </form>
-    <br>
+
     {% if message %}
-        <p>{{ message }}</p>
+        <p class="alert alert-primary mt-2" role="alert">{{ message }}</p>
     {% endif %}
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVFQWjxhNBM9T2GUHqrWr1NCRfyzMqaXQA1GtQzXuQuIU5bD7VMn" crossorigin="anonymous"></script>
 </body>
 </html>

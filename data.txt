@@ -1,0 +1,1 @@
+sudo /home/user/Pictures/env/bin/python manage.py runserver
